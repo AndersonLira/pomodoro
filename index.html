@@ -1,0 +1,108 @@
+<html>
+    <head>
+    <meta charset="UTF-8"> 
+        <title>Família Fonte Lira</title>
+        <style>
+            body {
+                background: #C70039;
+                background-image: url("cerca.png");
+                background-repeat: repeat-x;
+            }
+            .center {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+            p{
+                color:aliceblue;
+                text-align: center;
+                font-size: 24px;
+            }
+            span{
+                font-size: 36px;
+                font-family:'digital-7';
+                width:75%;
+            }
+            .display {
+                background-color: #17A630  ;
+            }
+            @font-face {
+                font-family: 'digital-7';
+                src: url('digital-7.ttf');
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="moment.min.js"></script>
+
+    </head>
+    <body >
+        <div id="app">
+            <img class = "center" src="logo.png"/><br>
+            <div class="display">
+                <p class="center">Se prepara Portugal, faltam</p><br>
+                <p class="center"><span>{{ days }}</span> dias <span>{{hours}}</span> horas <span>{{minutes}}</span> minutos e <span>{{seconds}}</span> segundos</p>
+            </div>
+        </div>
+        <audio id="myAudio">
+                <source src="gunshot.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+        </audio>
+        <script>
+                var now = moment();
+                var app = new Vue({
+                    el: '#app',
+                    data: {
+                        days: '',
+                        hours:'',
+                        minutes:'',
+                        seconds:'',
+                        started: false
+                    },
+                    methods: {
+                        updateTime: function(){
+                            var a = now;
+                            //var b = moment("2018-11-27T06:00:00.000Z");
+                            var b = moment();
+                            var days = b.diff(a, 'days');
+                            var hours = b.diff(a,'hours');
+                            var minutes = b.diff(a,'minutes');
+                            var seconds = b.diff(a,'seconds');
+                            this.days = days;
+                            this.hours = hours % 24;
+                            this.minutes = minutes % 60;
+                            this.seconds = seconds % 60;
+                            if(!this.started){
+                                this.started = true;
+                                var self = this;
+                                setInterval(self.updateTime,1000);
+                            }
+                        }
+                    }
+                });
+                app.updateTime();
+                var balls = 0;
+                var interval = 2000;
+                ballInterval = setInterval(function(){
+                    if(balls >= 10){
+                        stopInterval();
+                    }
+                    var x = document.getElementById("myAudio"); 
+                    x.play();
+                    img = document.createElement('img',);
+                    img.setAttribute('src',"ball-mark.png");
+                    x = Math.floor((Math.random() * screen.width));
+                    y = Math.floor((Math.random() * screen.height));
+                    img.setAttribute('style','position:fixed;left:'+x+";top:"+y);
+                    document.getElementsByTagName('body')[0].appendChild(img);
+                    balls++;
+
+                },interval);
+                function stopInterval(){
+                    clearInterval(ballInterval);
+                }
+        </script>        
+    </body>
+</html>
