@@ -1,7 +1,7 @@
 <html>
     <head>
     <meta charset="UTF-8"> 
-        <title>Família Fonte Lira</title>
+        <title>Pomodoro Timer</title>
         <style>
             body {
                 background: #C70039;
@@ -41,13 +41,13 @@
     <body >
         <div id="app">
             <img class = "center" src="logo.png"/><br>
-            <div class="display">
-                <p class="center">Se prepara Portugal, faltam</p><br>
-                <p class="center"><span>{{ days }}</span> dias <span>{{hours}}</span> horas <span>{{minutes}}</span> minutos e <span>{{seconds}}</span> segundos</p>
+            <div class="display" @click="start">
+                <p class="center">{{message}}</p><br>
+                <p class="center"><span>{{minutes}}</span> minutos e <span>{{seconds}}</span> segundos</p>
             </div>
         </div>
         <audio id="myAudio">
-                <source src="gunshot.mp3" type="audio/mpeg">
+                <source src="gun.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
         </audio>
         <script>
@@ -59,7 +59,8 @@
                         hours:'',
                         minutes:'',
                         seconds:'',
-                        started: false
+                        started: false,
+                        message: 'Pomodoro em progresso'
                     },
                     methods: {
                         updateTime: function(){
@@ -79,30 +80,15 @@
                                 var self = this;
                                 setInterval(self.updateTime,1000);
                             }
+                        },
+                        start: function(){
+                            var x = document.getElementById("myAudio"); 
+                            this.updateTime();
+                            x.play();
+
                         }
                     }
                 });
-                app.updateTime();
-                var balls = 0;
-                var interval = 2000;
-                ballInterval = setInterval(function(){
-                    if(balls >= 10){
-                        stopInterval();
-                    }
-                    var x = document.getElementById("myAudio"); 
-                    x.play();
-                    img = document.createElement('img',);
-                    img.setAttribute('src',"ball-mark.png");
-                    x = Math.floor((Math.random() * screen.width));
-                    y = Math.floor((Math.random() * screen.height));
-                    img.setAttribute('style','position:fixed;left:'+x+";top:"+y);
-                    document.getElementsByTagName('body')[0].appendChild(img);
-                    balls++;
-
-                },interval);
-                function stopInterval(){
-                    clearInterval(ballInterval);
-                }
         </script>        
     </body>
 </html>
