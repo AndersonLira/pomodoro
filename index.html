@@ -2,93 +2,46 @@
     <head>
     <meta charset="UTF-8"> 
         <title>Pomodoro Timer</title>
-        <style>
-            body {
-                background: #C70039;
-                background-image: url("cerca.png");
-                background-repeat: repeat-x;
-            }
-            .center {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 50%;
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-            p{
-                color:aliceblue;
-                text-align: center;
-                font-size: 24px;
-            }
-            span{
-                font-size: 36px;
-                font-family:'digital-7';
-                width:75%;
-            }
-            .display {
-                background-color: #17A630  ;
-            }
-            @font-face {
-                font-family: 'digital-7';
-                src: url('digital-7.ttf');
-            }
-        </style>
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <script src="moment.min.js"></script>
+        <link rel="icon" href="tomato.png">
+        <link rel="stylesheet" type="text/css" href="css/app.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
 
     </head>
     <body >
         <div id="app">
-            <img class = "center" src="logo.png"/><br>
-            <div class="display" @click="start">
-                <p class="center">{{message}}</p><br>
-                <p class="center"><span>{{minutes}}</span> minutos e <span>{{seconds}}</span> segundos</p>
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <img class = "center logo" src="tomato.png"/><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-4 offset-md-4 display" >
+                    <p class="">{{message}}</p><br>
+                    <p class=""><span>{{minutes}}</span> : <span>{{seconds}}</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 offset-md-4" >
+                    <div class="row" >
+                        <div class=" col-md-4   col-5">
+                            <button type="button" class="btn btn-success  col-12"  @click="start">Start</button>
+                        </div>
+                        <div class="offset-md-4 col-md-4  offset-1 col-5">
+                            <button type="button" class="btn btn-success  col-12"  @click="stop">Stop</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <audio id="myAudio">
                 <source src="gun.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
         </audio>
-        <script>
-                var now = moment();
-                var app = new Vue({
-                    el: '#app',
-                    data: {
-                        days: '',
-                        hours:'',
-                        minutes:'',
-                        seconds:'',
-                        started: false,
-                        message: 'Pomodoro em progresso'
-                    },
-                    methods: {
-                        updateTime: function(){
-                            var a = now;
-                            //var b = moment("2018-11-27T06:00:00.000Z");
-                            var b = moment();
-                            var days = b.diff(a, 'days');
-                            var hours = b.diff(a,'hours');
-                            var minutes = b.diff(a,'minutes');
-                            var seconds = b.diff(a,'seconds');
-                            this.days = days;
-                            this.hours = hours % 24;
-                            this.minutes = minutes % 60;
-                            this.seconds = seconds % 60;
-                            if(!this.started){
-                                this.started = true;
-                                var self = this;
-                                setInterval(self.updateTime,1000);
-                            }
-                        },
-                        start: function(){
-                            var x = document.getElementById("myAudio"); 
-                            this.updateTime();
-                            x.play();
-
-                        }
-                    }
-                });
-        </script>        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="moment.min.js"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>
