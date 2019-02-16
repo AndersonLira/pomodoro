@@ -11,7 +11,7 @@ var app = new Vue({
         short: 5,
         long: 15,
         base: 0,
-        cycle: 10,
+        cycle: 0,
         isPause: false,
         isRunning:false,
         cron: null,
