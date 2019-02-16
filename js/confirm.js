@@ -4,6 +4,16 @@ Vue.component('confirm',{
         isActive: {
             type: Boolean,
             default: false
+        },
+        okOnly: {
+            type: Boolean,
+            default: false
+        },
+        message: {
+            default:"Confirma?",
+        },
+        title: {
+            default: "Info"
         }
     },
     data: function(){

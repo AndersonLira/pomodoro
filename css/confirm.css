@@ -16,3 +16,6 @@
 .hiding {
     display:none;
 }
+.title {
+    font-weight: bolder
+}

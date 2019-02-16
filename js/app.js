@@ -6,7 +6,7 @@ var app = new Vue({
         minutes:0,
         seconds:0,
         started: false,
-        message: 'Pomodoro em progresso',
+        message: '',
         work: 25,
         short: 5,
         long: 15,
@@ -18,10 +18,12 @@ var app = new Vue({
         begin: moment(),
         dict: undefined,
         overlayOpen:false,
+        soundPopup: false,
     },
     created: function(){
         this.base = this.work;
         this.minutes = this.base;
+        this.message = this.getLabel('progress_work');
     },
     computed: {
         cancelLabel: function() {
@@ -53,8 +55,13 @@ var app = new Vue({
         start: function(){
             this.isRunning = true;
             this.begin = moment();
-            this.begin.add(this.base,'minutes')
+            this.begin.add(this.base,'minutes');
             this.cron = setInterval(this.updateTime,1000);
+            if(this.isPause){
+                this.message = this.getLabel('progress_rest');
+            }else{
+                this.message = this.getLabel('progress_work');
+            }
         },
         cancel: function(){
             this.isRunning = false;
@@ -72,6 +79,7 @@ var app = new Vue({
         alarm: function(){
             var x = document.getElementById("myAudio"); 
             x.play();
+            this.soundPopup = true;
             clearTimeout(this.cron);
 
         },
@@ -93,7 +101,7 @@ var app = new Vue({
                 }else{
                     this.base = this.short;
                 }
-            }else{
+            }else{        
                 this.base = this.work;
             }
             this.minutes = this.base;
@@ -113,6 +121,13 @@ var app = new Vue({
         },
         clearOverlay: function(){
             this.overlayOpen = false;
+        },
+        stopSound: function(){
+            this.soundPopup = false;
+            var x = document.getElementById("myAudio"); 
+            x.pause();
+            x.currentTime = 0;
+        
         }
     }
 });

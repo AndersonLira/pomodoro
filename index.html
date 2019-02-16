@@ -7,13 +7,26 @@
         
         <link rel="icon" href="tomato.png">
         <link rel="stylesheet" type="text/css" href="css/app.css">
-        <link rel="stylesheet" type="text/css" href="css/counter.css">
+        <link rel="stylesheet" type="text/css" href="css/confirm.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
 
     </head>
     <body >
         <div id="app">
-            <confirm v-on:on-confirm="resetCounter" v-on:on-cancel="clearOverlay" :is-active="overlayOpen" ></confirm>
+            <confirm
+                :title="'Atenção'"
+                :message="'Reiniciar contador?'" 
+                v-on:on-confirm="resetCounter" 
+                v-on:on-cancel="clearOverlay" 
+                :is-active="overlayOpen" >
+            </confirm>
+            <confirm 
+                :title="'Atenção'"
+                :message="isPause ? 'Hora do Intervalo' : 'Hora de Voltar ao trabalho'"
+                v-on:on-confirm="stopSound"  
+                :is-active="soundPopup" 
+                :ok-only="true">
+            </confirm>
             <div class="row">
                 <div class="col-md-4 offset-md-4">
                     <span class="counter center">{{cycle}}</span><img class = "center logo" v-on:click="overlayOpen = true" src="tomato.png"/><br>
@@ -49,12 +62,16 @@
                 <div class="row" >
                     <div class="offset-md-2 col-md-8" style="margin-top:15%;background-color:#EEE">
                         <div class="col-12 center" >
-                            <span>Deseja realmente reiniciar o contador?</span>
+                            <span class="title">{{title}}</span>
                         </div>
+                        <div class="col-12 center" >
+                                <span>{{message}}</span>
+                        </div>
+    
                         <div class="col-md-5 col-12 center">
                                 <button type="button" class="btn btn-success col-12" v-on:click="ok">{{'Confirmar'}}</button>
                         </div>
-                        <div class="col-md-5 col-12 center">
+                        <div class="col-md-5 col-12 center" v-if="!okOnly">
                             <button type="button" class="btn btn-danger col-12" v-on:click="cancel">{{'Cancelar'}}</button>
                         </div>
                     </div>
