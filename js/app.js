@@ -3,20 +3,24 @@ var app = new Vue({
     data: {
         days: '',
         hours:'',
-        minutes:25,
+        minutes:0,
         seconds:0,
         started: false,
         message: 'Pomodoro em progresso',
-        work: 1,
-        short: 1,
+        work: 25,
+        short: 5,
         long: 15,
-        base: 1,
+        base: 0,
         cycle: 0,
         isPause: false,
         isRunning:false,
         cron: null,
         begin: moment(),
         dict: undefined
+    },
+    created: function(){
+        this.base = this.work;
+        this.minutes = this.base;
     },
     computed: {
         cancelLabel: function() {

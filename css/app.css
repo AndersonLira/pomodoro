@@ -10,6 +10,8 @@ body {
     width: 50%;
     margin-top: 5px;
     margin-bottom: 5px;
+    position: relative;
+    text-align: center;
 }
 p{
     color:aliceblue;
@@ -34,4 +36,10 @@ span{
 }
 div {
     padding: 3px;
+}
+.counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
