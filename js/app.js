@@ -3,24 +3,34 @@ var app = new Vue({
     data: {
         days: '',
         hours:'',
-        minutes:'',
-        seconds:'',
+        minutes:25,
+        seconds:0,
         started: false,
         message: 'Pomodoro em progresso',
-        work: 25,
-        short: 5,
+        work: 1,
+        short: 1,
         long: 15,
-        cycle: 0,
         base: 1,
+        cycle: 0,
         isPause: false,
+        isRunning:false,
         cron: null,
-        begin: moment()
+        begin: moment(),
+        dict: undefined
+    },
+    computed: {
+        cancelLabel: function() {
+            return this.getLabel(this.isPause ? 'stop_rest': 'stop_pomodoro');
+        },
+        startLabel: function(){
+            return this.getLabel(!this.isPause ? 'start_pomodoro': 'start_rest');
+        }
     },
     methods: {
         updateTime: function(){
-            var a = this.begin;
+            var b = this.begin;
             //var b = moment("2018-11-27T06:00:00.000Z");
-            var b = moment();
+            var a = moment();
             var days = b.diff(a, 'days');
             var hours = b.diff(a,'hours');
             var minutes = b.diff(a,'minutes');
@@ -29,25 +39,67 @@ var app = new Vue({
             this.hours = hours % 24;
             this.minutes = minutes % 60;
             this.seconds = seconds % 60;
-            if(this.minutes >= this.base){
+            if(this.minutes <= 0 && this.seconds <= 0){
                 this.alarm();
-                this.cycle++;
+                this.nextCycle();
             }
 
         },
         start: function(){
+            this.isRunning = true;
             this.begin = moment();
+            this.begin.add(this.base,'minutes')
             this.cron = setInterval(this.updateTime,1000);
         },
-        stop: function(){
+        cancel: function(){
+            this.isRunning = false;
+            if(this.isPause){
+                this.base = this.work;
+                this.isPause = false;
+            }
             clearTimeout(this.cron);
-            console.log('stope');
+            this.resetCron();
+        },
+        resetCron: function(){
+            this.minutes = this.base;
+            this.seconds = 0;
         },
         alarm: function(){
             var x = document.getElementById("myAudio"); 
             x.play();
             clearTimeout(this.cron);
 
+        },
+        getLabel: function(label){
+            if(!this.dict){
+                try{
+                    this.dict = dictionaries['pt-br'];
+                }catch(e){
+                    console.error('dictionaries not found');
+                }
+            }
+            return this.dict[label] ? this.dict[label]:label;
+        },
+        nextCycle: function(){
+            if(!this.isPause){
+                this.cycle++;
+                if(this.cycle % 4 == 0) {
+                    this.base = this.long;
+                }else{
+                    this.base = this.short;
+                }
+            }else{
+                this.base = this.work;
+            }
+            this.minutes = this.base;
+            this.seconds = 0;
+            this.isRunning = false;
+            this.isPause = !this.isPause;
+
+        },
+        formatNum: function(num){
+            var aux = "0" + num;
+            return aux.length > 2 ? num : aux;
         }
     }
 });
