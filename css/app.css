@@ -18,7 +18,7 @@ p{
     text-align: center;
     font-size: 24px;
 }
-span{
+.clock{
     font-size: 36px;
     font-family:'digital-7';
     width:75%;
@@ -30,10 +30,13 @@ span{
     max-height: 150px;
     max-width: 150px;
 }
+
+
 @font-face {
     font-family: 'digital-7';
     src: url('digital-7.ttf');
 }
+
 div {
     padding: 3px;
 }
@@ -43,3 +46,5 @@ div {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+

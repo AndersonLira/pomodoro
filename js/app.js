@@ -11,12 +11,13 @@ var app = new Vue({
         short: 5,
         long: 15,
         base: 0,
-        cycle: 0,
+        cycle: 10,
         isPause: false,
         isRunning:false,
         cron: null,
         begin: moment(),
-        dict: undefined
+        dict: undefined,
+        overlayOpen:false,
     },
     created: function(){
         this.base = this.work;
@@ -104,6 +105,14 @@ var app = new Vue({
         formatNum: function(num){
             var aux = "0" + num;
             return aux.length > 2 ? num : aux;
+        },
+        resetCounter: function(){
+            this.cycle = 0;
+            this.cancel();
+            this.clearOverlay();
+        },
+        clearOverlay: function(){
+            this.overlayOpen = false;
         }
     }
 });
