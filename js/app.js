@@ -49,7 +49,6 @@ var app = new Vue({
     methods: {
         updateTime: function(){
             var b = this.begin;
-            //var b = moment("2018-11-27T06:00:00.000Z");
             var a = moment();
             var days = b.diff(a, 'days');
             var hours = b.diff(a,'hours');
@@ -94,8 +93,8 @@ var app = new Vue({
             this.seconds = 0;
         },
         alarm: function(){
-            var x = document.getElementById("myAudio"); 
-            x.play();
+            var audio = document.getElementById("myAudio"); 
+            audio.play();
             this.soundPopup = true;
             clearTimeout(this.cron);
 
@@ -141,9 +140,8 @@ var app = new Vue({
         },
         stopSound: function(){
             this.soundPopup = false;
-            var x = document.getElementById("myAudio"); 
-            x.pause();
-            x.currentTime = 0;
+            var audio = document.getElementById("myAudio"); 
+            audio.currentTime = audio.duration;
         
         },
         loadPersistence: function(){
