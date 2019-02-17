@@ -21,9 +21,22 @@ var app = new Vue({
         soundPopup: false,
     },
     created: function(){
+        var data = localStorage.getItem("data");
         this.base = this.work;
         this.minutes = this.base;
         this.message = this.getLabel('progress_work');
+        this.loadPersistence();
+        if(this.isRunning){
+            this.start();
+        }
+    },
+    mounted() {
+        var me = this;
+        $(window).on('unload', function(){
+            var obj = me.$data;
+            var data = JSON.stringify(obj);
+            localStorage.setItem("data",data);
+        });    
     },
     computed: {
         cancelLabel: function() {
@@ -53,9 +66,13 @@ var app = new Vue({
 
         },
         start: function(){
+            if(!this.isRunning){
+                this.begin = moment();
+                this.begin.add(this.base,'minutes');
+            }else{
+                this.begin = moment(this.begin);
+            }
             this.isRunning = true;
-            this.begin = moment();
-            this.begin.add(this.base,'minutes');
             this.cron = setInterval(this.updateTime,1000);
             if(this.isPause){
                 this.message = this.getLabel('progress_rest');
@@ -128,6 +145,17 @@ var app = new Vue({
             x.pause();
             x.currentTime = 0;
         
+        },
+        loadPersistence: function(){
+            var data = localStorage.getItem("data");
+            if(data){
+                var obj = JSON.parse(data);
+                for(k in obj) {
+                    this[k] = obj[k];
+                }
+                return obj;
+            }
+            return null;
         }
     }
 });
