@@ -1,3 +1,4 @@
+var version = "1.2.0";
 var app = new Vue({
     el: '#app',
     data: {
@@ -19,12 +20,11 @@ var app = new Vue({
         dict: undefined,
         overlayOpen:false,
         soundPopup: false,
-        sound: new Sound(),
+        sound: null,
         sounds: []
     },
     created: function(){
         //persisted data
-        var data = localStorage.getItem("data");
         this.base = this.work;
         this.minutes = this.base;
         this.message = this.getLabel('progress_work');
@@ -35,6 +35,7 @@ var app = new Vue({
             new Sound({id: 1, title:"Gun",source:"sounds/gun.mp3"}),
             new Sound({id: 2, title:"Submarine",source:"sounds/submarine.mp3"}),
         ];
+        debugger;
         if(!this.sound){
             this.sound = this.sounds[0];
         }
@@ -47,7 +48,7 @@ var app = new Vue({
         $(window).on('unload', function(){
             var obj = me.$data;
             var data = JSON.stringify(obj);
-            localStorage.setItem("data",data);
+            localStorage.setItem("data-"+version,data);
         });    
     },
     computed: {
@@ -157,8 +158,9 @@ var app = new Vue({
         
         },
         loadPersistence: function(){
-            var data = localStorage.getItem("data");
+            var data = localStorage.getItem("data-"+version);
             if(data){
+                localStorage.clear();
                 var obj = JSON.parse(data);
                 for(k in obj) {
                     this[k] = obj[k];
