@@ -19,13 +19,25 @@ var app = new Vue({
         dict: undefined,
         overlayOpen:false,
         soundPopup: false,
+        sound: new Sound(),
+        sounds: []
     },
     created: function(){
+        //persisted data
         var data = localStorage.getItem("data");
         this.base = this.work;
         this.minutes = this.base;
         this.message = this.getLabel('progress_work');
         this.loadPersistence();
+        //not persisted data
+        this.dict = null;
+        this.sounds = [
+            new Sound({id: 1, title:"Gun",source:"sounds/gun.mp3"}),
+            new Sound({id: 2, title:"Submarine",source:"sounds/submarine.mp3"}),
+        ];
+        if(!this.sound){
+            this.sound = this.sounds[0];
+        }
         if(this.isRunning){
             this.start();
         }
@@ -154,6 +166,14 @@ var app = new Vue({
                 return obj;
             }
             return null;
+        },
+        changeSound: function(){
+            var size = this.sounds.length;
+            var id = this.sound.id;
+            var next = (id == size ? 0 : id);
+            this.sound = this.sounds[next];
+            var audio = document.getElementById("myAudio"); 
+            audio.load();
         }
     }
 });

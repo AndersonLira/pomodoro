@@ -48,13 +48,20 @@
                             <button type="button" class="btn btn-warning  col-12"  @click="cancel">{{cancelLabel}}</button>
                         </div>
                     </div>
+                    <div class="row" >
+                        <div class="offset-1 col-10"  >
+                            <button type="button" class="btn btn-secondary  col-12" v-on:click="changeSound" >{{getLabel('change_sound')}} {{sound.title}}</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
-        <audio id="myAudio">
-                <source src="gun.mp3" type="audio/mpeg">
+            <audio id="myAudio">
+                <source v-bind:src="sound.source" type="audio/mpeg">
                 Your browser does not support the audio element.
-        </audio>
+            </audio>
+    </div>
+
 
         <!-- Confirm component-->
         <script id ="confirm" type="text/x-template">
@@ -83,6 +90,7 @@
         <script src="js/vendor/vue.js"></script>
         <script src="moment.min.js"></script>
         <script src="js/dict.js"></script>
+        <script src="js/sound.js"></script>
         <script src="js/confirm.js"></script>
         <script src="js/app.js"></script>
     </body>

@@ -4,7 +4,8 @@ var dict_pt = {
     "stop_pomodoro": "Cancelar Pomodoro",
     "stop_rest": "Cancelar Pausa",
     "progress_work": "Pomodoro em progresso",
-    "progress_rest": "Momento de pausa ;)"
+    "progress_rest": "Momento de pausa ;)",
+    "change_sound":"Som atual:",
 }
 
 var dictionaries = {
