@@ -1,4 +1,4 @@
-var version = "1.3.0x";
+var version = "1.3.0";
 var app = new Vue({
     el: '#app',
     data: {
