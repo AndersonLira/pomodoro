@@ -1,4 +1,4 @@
-var version = "1.2.0";
+var version = "1.3.0x";
 var app = new Vue({
     el: '#app',
     data: {
@@ -31,11 +31,7 @@ var app = new Vue({
         this.loadPersistence();
         //not persisted data
         this.dict = null;
-        this.sounds = [
-            new Sound({id: 1, title:"Gun",source:"sounds/gun.mp3"}),
-            new Sound({id: 2, title:"Submarine",source:"sounds/submarine.mp3"}),
-        ];
-        debugger;
+        this.sounds = getSounds();
         if(!this.sound){
             this.sound = this.sounds[0];
         }
