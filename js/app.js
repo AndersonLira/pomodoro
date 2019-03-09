@@ -1,4 +1,3 @@
-var version = "1.4.0";
 var app = new Vue({
     el: '#app',
     data: {
@@ -21,7 +20,8 @@ var app = new Vue({
         overlayOpen:false,
         soundPopup: false,
         sound: null,
-        sounds: []
+        sounds: [],
+        version: '1.4.0'
     },
     created: function(){
         //persisted data
@@ -44,7 +44,7 @@ var app = new Vue({
         $(window).on('unload', function(){
             var obj = me.$data;
             var data = JSON.stringify(obj);
-            localStorage.setItem("data-"+version,data);
+            localStorage.setItem("data-"+me.version,data);
         });    
     },
     computed: {
@@ -155,7 +155,7 @@ var app = new Vue({
         
         },
         loadPersistence: function(){
-            var data = localStorage.getItem("data-"+version);
+            var data = localStorage.getItem("data-"+this.version);
             if(data){
                 localStorage.clear();
                 var obj = JSON.parse(data);
