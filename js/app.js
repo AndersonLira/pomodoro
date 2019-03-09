@@ -1,4 +1,4 @@
-var version = "1.3.0";
+var version = "1.4.0";
 var app = new Vue({
     el: '#app',
     data: {
@@ -150,7 +150,8 @@ var app = new Vue({
         stopSound: function(){
             this.soundPopup = false;
             var audio = document.getElementById("myAudio"); 
-            audio.currentTime = audio.duration;
+            audio.currentTime = 0;
+            audio.load();
         
         },
         loadPersistence: function(){
