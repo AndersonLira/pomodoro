@@ -12,6 +12,7 @@ var app = new Vue({
         long: 15,
         base: 0,
         cycle: 0,
+        accum:0,
         isPause: false,
         isRunning:false,
         cron: null,
@@ -21,7 +22,7 @@ var app = new Vue({
         soundPopup: false,
         sound: null,
         sounds: [],
-        version: '1.4.0'
+        version: '1.5.0'
     },
     created: function(){
         //persisted data
@@ -76,7 +77,7 @@ var app = new Vue({
         start: function(){
             if(!this.isRunning){
                 this.begin = moment();
-                this.begin.add(this.base,'minutes');
+                this.begin.add(this.base,'seconds');
             }else{
                 this.begin = moment(this.begin);
             }
@@ -121,6 +122,7 @@ var app = new Vue({
         nextCycle: function(){
             if(!this.isPause){
                 this.cycle++;
+                this.accum++;
                 if(this.cycle % 4 == 0) {
                     this.base = this.long;
                 }else{
@@ -143,6 +145,9 @@ var app = new Vue({
             this.cycle = 0;
             this.cancel();
             this.clearOverlay();
+        },
+        resetAccum: function(){
+            this.accum = 0;
         },
         clearOverlay: function(){
             this.overlayOpen = false;

@@ -14,9 +14,11 @@ body {
     text-align: center;
 }
 p{
-    color:aliceblue;
     text-align: center;
     font-size: 24px;
+}
+p, .dayInfo{
+    color:aliceblue;
 }
 .clock{
     font-size: 36px;
@@ -31,6 +33,10 @@ p{
     max-width: 150px;
 }
 
+.totalCycle{
+    max-height: 80px;
+    max-width: 80px;
+}
 
 @font-face {
     font-family: 'digital-7';
