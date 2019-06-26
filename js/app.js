@@ -22,7 +22,7 @@ var app = new Vue({
         soundPopup: false,
         sound: null,
         sounds: [],
-        version: '1.5.0'
+        version: '1.5.1'
     },
     created: function(){
         //persisted data
