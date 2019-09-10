@@ -22,7 +22,7 @@ var app = new Vue({
         soundPopup: false,
         sound: null,
         sounds: [],
-        version: '1.5.2'
+        version: '1.6.2'
     },
     created: function(){
         //persisted data
@@ -128,6 +128,7 @@ var app = new Vue({
                 }else{
                     this.base = this.short;
                 }
+                this.localStatistics();
             }else{        
                 this.base = this.work;
             }
@@ -135,7 +136,6 @@ var app = new Vue({
             this.seconds = 0;
             this.isRunning = false;
             this.isPause = !this.isPause;
-
         },
         formatNum: function(num){
             var aux = "0" + num;
@@ -162,7 +162,7 @@ var app = new Vue({
         loadPersistence: function(){
             var data = localStorage.getItem("data-"+this.version);
             if(data){
-                localStorage.clear();
+                this.clearOldData();
                 var obj = JSON.parse(data);
                 for(k in obj) {
                     this[k] = obj[k];
@@ -171,6 +171,13 @@ var app = new Vue({
             }
             return null;
         },
+        clearOldData: function(){
+            for (var key in localStorage){
+                if(key.indexOf("data-") > -1 ){
+                    localStorage.removeItem(key);
+                }
+             }
+        },
         changeSound: function(){
             var size = this.sounds.length;
             var id = this.sound.id;
@@ -178,6 +185,15 @@ var app = new Vue({
             this.sound = this.sounds[next];
             var audio = document.getElementById("myAudio"); 
             audio.load();
+        },
+        localStatistics: function(){
+            var d = new Date();
+            var key = "Total " + d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+            var accum = localStorage.getItem(key);
+            if(!accum){
+                accum = 0;
+            } 
+            localStorage.setItem(key,parseInt(accum)+1);
         }
     }
 });
