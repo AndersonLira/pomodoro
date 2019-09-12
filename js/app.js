@@ -48,7 +48,6 @@ var app = new Vue({
             var data = JSON.stringify(obj);
             localStorage.setItem("data-"+me.version,data);
         });
-        this.mountGraph();    
     },
     computed: {
         cancelLabel: function() {
@@ -197,17 +196,6 @@ var app = new Vue({
             } 
             localStorage.setItem(key,parseInt(accum)+1);
         },
-        mountGraph: function(){
-            let data = {};
-            for( var key in localStorage){
-                if(key.indexOf("Total") == 0){
-                    let dateString = key.replace("Total ","");
-                    let date = new Date(dateString);
-                    data[date] = localStorage.getItem(key);
-                }
-            }
-            this.statistics = data;
-            console.log(this.statistics);
-        }
+
     }
 });
