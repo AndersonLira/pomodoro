@@ -22,7 +22,8 @@ var app = new Vue({
         soundPopup: false,
         sound: null,
         sounds: [],
-        version: '1.6.2'
+        statistics:{},
+        version: '1.7.0'
     },
     created: function(){
         //persisted data
@@ -46,7 +47,8 @@ var app = new Vue({
             var obj = me.$data;
             var data = JSON.stringify(obj);
             localStorage.setItem("data-"+me.version,data);
-        });    
+        });
+        this.mountGraph();    
     },
     computed: {
         cancelLabel: function() {
@@ -77,7 +79,7 @@ var app = new Vue({
         start: function(){
             if(!this.isRunning){
                 this.begin = moment();
-                this.begin.add(this.base,'minutes');
+                this.begin.add(this.base,'seconds');
             }else{
                 this.begin = moment(this.begin);
             }
@@ -188,12 +190,24 @@ var app = new Vue({
         },
         localStatistics: function(){
             var d = new Date();
-            var key = "Total " + d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+            var key = "Total " + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
             var accum = localStorage.getItem(key);
             if(!accum){
                 accum = 0;
             } 
             localStorage.setItem(key,parseInt(accum)+1);
+        },
+        mountGraph: function(){
+            let data = {};
+            for( var key in localStorage){
+                if(key.indexOf("Total") == 0){
+                    let dateString = key.replace("Total ","");
+                    let date = new Date(dateString);
+                    data[date] = localStorage.getItem(key);
+                }
+            }
+            this.statistics = data;
+            console.log(this.statistics);
         }
     }
 });
