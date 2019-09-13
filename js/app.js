@@ -23,7 +23,7 @@ var app = new Vue({
         sound: null,
         sounds: [],
         statistics:{},
-        version: '1.7.0'
+        version: '1.7.1'
     },
     created: function(){
         //persisted data
@@ -78,7 +78,7 @@ var app = new Vue({
         start: function(){
             if(!this.isRunning){
                 this.begin = moment();
-                this.begin.add(this.base,'seconds');
+                this.begin.add(this.base,'minutes');
             }else{
                 this.begin = moment(this.begin);
             }
